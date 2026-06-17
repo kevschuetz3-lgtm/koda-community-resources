@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koda Iron View | Community Resource Sheet</title>
+<meta name="description" content="Professional services offered by members of the Koda CrossFit Iron View community — healthcare, wellness, education, real estate and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0C1A2B;        /* exact Koda site navy */
+    --navy-2:#102740;      /* lighter panel navy */
+    --navy-3:#0a1422;      /* deepest navy */
+    --gold:#C6A14C;        /* Koda gold accent */
+    --gold-soft:#d9bd7e;
+    --cream:#F4F5F7;
+    --line:#e3e7ec;
+    --ink:#0C1A2B;
+    --muted:#5b6675;
+    --white:#ffffff;
+    --shadow:0 10px 30px rgba(12,26,43,.10);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- HEADER / HERO ---------- */
+  .hero{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-3) 100%);
+    color:var(--white);
+    padding:54px 22px 60px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
+    background:linear-gradient(90deg,var(--gold) 0%,var(--gold-soft) 50%,var(--gold) 100%);
+  }
+  .hero-logo{display:block;margin:0 auto 24px;width:165px;height:auto;filter:brightness(0) invert(1);}
+  .eyebrow{
+    font-family:'Oswald',sans-serif;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:var(--gold);
+    margin:0 0 12px;
+    font-weight:500;
+  }
+  .hero h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    font-size:clamp(2rem,5.5vw,3.4rem);
+    line-height:1.04;
+    margin:0 0 18px;
+  }
+  .hero h1 span{color:var(--gold);}
+  .hero p{
+    max-width:680px;margin:0 auto;
+    color:#c9d2dd;font-size:1.02rem;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px;}
+  .toolbar{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;
+    margin:30px 0 18px;
+  }
+  .toolbar .count{font-size:.9rem;color:var(--muted);font-weight:500;}
+  .controls{display:flex;gap:8px;}
+  .btn{
+    font-family:'Oswald',sans-serif;letter-spacing:.08em;text-transform:uppercase;
+    font-size:.72rem;font-weight:600;cursor:pointer;
+    border:1px solid var(--line);background:var(--white);color:var(--navy);
+    padding:9px 15px;border-radius:999px;transition:.18s;
+  }
+  .btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
+
+  /* ---------- ACCORDION (groups) ---------- */
+  .group{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-bottom:16px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .group-head{
+    width:100%;text-align:left;border:0;background:transparent;cursor:pointer;
+    display:flex;align-items:center;gap:16px;
+    padding:22px 22px;font-family:inherit;
+  }
+  .group-head:focus-visible{outline:3px solid var(--gold);outline-offset:-3px;}
+  .g-icon{
+    flex:0 0 46px;height:46px;width:46px;border-radius:11px;
+    background:var(--navy);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .g-icon svg{width:24px;height:24px;}
+  .g-titles{flex:1;min-width:0;}
+  .g-titles h2{
+    font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.04em;font-size:1.2rem;margin:0;color:var(--navy);
+  }
+  .g-titles .sub{font-size:.85rem;color:var(--muted);margin-top:2px;}
+  .chev{flex:0 0 auto;color:var(--navy);transition:transform .3s ease;}
+  .group.open .chev{transform:rotate(180deg);}
+  .group.open .g-icon{background:var(--gold);color:var(--navy);}
+
+  .group-body{
+    display:grid;grid-template-rows:0fr;
+    transition:grid-template-rows .34s ease;
+  }
+  .group-body-inner{overflow:hidden;}
+  .group.open .group-body{grid-template-rows:1fr;}
+  .group-pad{padding:4px 22px 24px;}
+
+  /* ---------- SUB SECTIONS + CARDS ---------- */
+  .subhead{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;
+    font-size:.78rem;font-weight:600;color:var(--gold);
+    margin:22px 0 12px;display:flex;align-items:center;gap:10px;
+  }
+  .subhead::after{content:"";flex:1;height:1px;background:var(--line);}
+  .subhead:first-child{margin-top:6px;}
+
+  .card{
+    border:1px solid var(--line);border-left:4px solid var(--gold);
+    border-radius:10px;padding:16px 18px;margin-bottom:12px;background:#fbfcfd;
+  }
+  .card:last-child{margin-bottom:0;}
+  .card h3{
+    margin:0 0 4px;font-size:1.05rem;font-weight:700;color:var(--navy);
+  }
+  .card .role{font-size:.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+  .card p{margin:0 0 10px;font-size:.95rem;color:#384250;}
+  .card ul{margin:0 0 10px;padding-left:18px;font-size:.93rem;color:#384250;}
+  .card ul li{margin:2px 0;}
+  .contacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+  .contacts a,.contacts span.c{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.83rem;font-weight:600;text-decoration:none;
+    background:var(--navy);color:#fff;padding:7px 12px;border-radius:999px;
+    transition:.16s;
+  }
+  .contacts a:hover{background:var(--gold);color:var(--navy);}
+  .contacts span.c{background:#eef1f5;color:var(--navy);}
+  .contacts svg{width:13px;height:13px;}
+  .tag{
+    display:inline-block;background:var(--gold);color:var(--navy);
+    font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:6px;
+    margin-bottom:8px;letter-spacing:.02em;
+  }
+
+  /* ---------- COMMUNITY COLLAB ---------- */
+  .collab{margin:46px 0 10px;}
+  .collab h2{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;text-align:center;
+    letter-spacing:.05em;color:var(--navy);font-size:1.7rem;margin:0 0 26px;
+  }
+  .collab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .collab-card{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:26px 22px;position:relative;
+  }
+  .collab-card .num{
+    font-family:'Oswald',sans-serif;font-weight:700;font-size:1.05rem;
+    width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--navy);
+    display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+  }
+  .collab-card h3{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:1.05rem;margin:0 0 8px;}
+  .collab-card p{margin:0;font-size:.9rem;color:#c9d2dd;}
+
+  /* ---------- ADD-ME CTA ---------- */
+  .cta{
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-soft) 100%);
+    color:var(--navy);border-radius:var(--radius);
+    padding:26px 24px;text-align:center;margin:42px 0 0;
+    display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+    box-shadow:var(--shadow);
+  }
+  .cta svg{width:30px;height:30px;flex:0 0 auto;}
+  .cta p{margin:0;font-size:1.1rem;font-weight:600;max-width:620px;}
+  .cta b{font-weight:800;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-3) 100%);
+    color:#fff;margin-top:24px;padding:46px 18px 36px;
+  }
+  .foot-wrap{max-width:920px;margin:0 auto;}
+  .lockup{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:26px;}
+  .lockup .mark{width:86px;height:auto;filter:brightness(0) invert(1);}
+  .lockup .divider{width:2px;height:42px;background:rgba(255,255,255,.3);}
+  .lockup .name{font-family:'Oswald',sans-serif;line-height:1;}
+  .lockup .name b{display:block;font-size:1.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .lockup .name small{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+  .foot-contacts{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:14px 34px;
+    border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);
+    padding:22px 0;margin-bottom:22px;
+  }
+  .foot-contacts a{
+    color:#dbe2ea;text-decoration:none;font-size:.92rem;font-weight:500;
+    display:inline-flex;align-items:center;gap:9px;transition:.16s;
+  }
+  .foot-contacts a:hover{color:var(--gold);}
+  .foot-contacts svg{width:16px;height:16px;color:var(--gold);flex:0 0 auto;}
+  .foot-note{text-align:center;color:#9aa6b4;font-size:.82rem;line-height:1.6;}
+  .foot-note b{color:#fff;}
+
+  @media(max-width:640px){
+    .collab-grid{grid-template-columns:1fr;}
+    .hero{padding:42px 18px 50px;}
+    .group-head{padding:18px 16px;gap:12px;}
+    .group-pad{padding:4px 16px 20px;}
+    .toolbar{margin-top:24px;}
+    .cta p{font-size:1rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <!-- official KX Koda logo (from KX Koda Corrected.ai), recolored white -->
+  <img class="hero-logo" src="koda-kx-corrected.png" alt="Koda CrossFit Iron View">
+
+  <p class="eyebrow">CrossFit Iron View</p>
+  <h1>Community <span>Resource</span> Sheet</h1>
+  <p>This comprehensive guide compiles professional services offered by Koda Iron View members. From real estate to healthcare, these resources represent the diverse expertise available within our gym family. Contact information is provided where available to facilitate connections within our community.</p>
+</header>
+
+<main class="wrap">
+
+  <div class="toolbar">
+    <span class="count" id="count"></span>
+    <div class="controls">
+      <button class="btn" id="expandAll">Expand all</button>
+      <button class="btn" id="collapseAll">Collapse all</button>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 1 : REAL ESTATE & INSURANCE -->
+  <!-- ====================================================== -->
+  <section class="group open">
+    <button class="group-head" aria-expanded="true">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg></span>
+      <span class="g-titles"><h2>Real Estate &amp; Insurance</h2><span class="sub">Realtors · Property Management · Insurance</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <div class="card">
+        <h3>Alex Miller</h3>
+        <div class="role">Realtor</div>
+        <p>Alex serves the Denver metro area with all real estate needs.</p>
+        <div class="contacts">
+          <a href="tel:3035879440">303-587-9440</a>
+          <a href="mailto:alex@luxdenver.com">alex@luxdenver.com</a>
+          <a href="https://www.luxdenver.com/" target="_blank" rel="noopener">Alex Miller Realtor</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Andrew Donnelly</h3>
+        <div class="role">InsureU</div>
+        <p>Andrew Donnelly offers comprehensive insurance solutions through InsureU. Whether you need assistance with health, life, auto, or home insurance, Andrew provides personalized guidance to help you find the best coverage options for your unique situation.</p>
+        <div class="contacts">
+          <a href="tel:7202992502">720-299-2502</a>
+          <a href="https://www.insureucolorado.com/" target="_blank" rel="noopener">InsureU</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Scott Otis</h3>
+        <div class="role">Property Management</div>
+        <div class="contacts"><a href="https://zealmgmt.com/" target="_blank" rel="noopener">Zeal Property Management</a></div>
+      </div>
+      <div class="card">
+        <h3>Chris Curry</h3>
+        <div class="role">Realtor</div>
+        <p>Chris is a realtor and helps with off-market properties — great for people looking for flip opportunities.</p>
+        <div class="contacts"><a href="tel:7207595959">720-759-5959</a></div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 2 : CONTRACTORS -->
+  <!-- ====================================================== -->
+  <section class="group">
+    <button class="group-head" aria-expanded="false">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L3 18v3h3l6.1-6.1a4 4 0 0 0 5.6-5.6l-2.9 2.9-2.1-2.1z"/></svg></span>
+      <span class="g-titles"><h2>Contractors</h2><span class="sub">Flooring &amp; Trades</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <div class="card">
+        <h3>Preston Fischer</h3>
+        <div class="role">Flooring</div>
+        <div class="contacts"><a href="tel:9208413025">920-841-3025</a></div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 3 : PHYSICAL THERAPY & CHIROPRACTIC -->
+  <!-- ====================================================== -->
+  <section class="group">
+    <button class="group-head" aria-expanded="false">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+      <span class="g-titles"><h2>Physical Therapy &amp; Chiropractic</h2><span class="sub">Physical Therapy Specialists · Chiropractic Care Network</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <div class="subhead">Physical Therapy Specialists</div>
+      <div class="card">
+        <h3>Erica Tran</h3>
+        <p>Specializing in Orthopedic and Pelvic Health Physical Therapy with certifications in:</p>
+        <ul><li>Functional Dry Needling Level 2</li><li>Orthopedic Manual Therapy</li></ul>
+        <p>Offers both concierge PT services (cash-based) and formal therapy through Luna.</p>
+        <div class="contacts">
+          <a href="tel:7202617848">720-261-7848</a>
+          <a href="mailto:erica@mendcolorado.com">erica@mendcolorado.com</a>
+          <a href="http://www.mendcolorado.com/" target="_blank" rel="noopener">mendcolorado.com</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Amber Smith</h3>
+        <p>Physical Therapist with impressive credentials:</p>
+        <ul><li>Functional Dry Needling Level 2 certification</li><li>Certified Orthopedic Manual Therapy</li></ul>
+        <p>Services include concierge PT (cash-based, no insurance) and formal therapy via Luna.</p>
+      </div>
+      <div class="card">
+        <h3>Megan Davis</h3>
+        <div class="role">Move Lab Physical Therapy</div>
+        <p>I am an orthopedic specialist with an emphasis on manual therapy and specialized exercise. I love working with the Koda CrossFit community to keep people working out and achieving their goals.</p>
+        <div class="contacts">
+          <a href="tel:3039903224">303-990-3224</a>
+          <a href="mailto:Megan@movelabphysicaltherapy.com">Megan@movelabphysicaltherapy.com</a>
+          <a href="https://movelabphysicaltherapy.com/" target="_blank" rel="noopener">movelabphysicaltherapy.com</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Kristin Carpenter</h3>
+        <div class="role">Mend Physical Therapy</div>
+        <div class="contacts">
+          <a href="tel:7207726780">720-772-6780</a>
+          <a href="tel:3038709271">303-870-9271 (Call or Text)</a>
+          <a href="tel:8446975513">844-697-5513</a>
+          <a href="mailto:kristin@mendcolorado.com">kristin@mendcolorado.com</a>
+          <a href="http://www.mendcolorado.com/" target="_blank" rel="noopener">mendcolorado.com</a>
+          <a href="https://intakeq.com/booking/c2caxy" target="_blank" rel="noopener">Schedule online</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="tag">$50 off your first evaluation</span>
+        <h3>Anthony Gagnor</h3>
+        <div class="role">Fuse Performance and Rehab</div>
+        <p>Fuse Performance and Rehab is a concierge, cash-based wellness clinic co-owned by myself (a physical therapist) and my business partner Jordan, a chiropractor who will soon be joining Koda. Our clinic is located in the front offices of Koda CrossFit Iron View.</p>
+        <p>I provide one-on-one, individualized care focused on injury prevention, rehabilitation, and performance recovery. My treatments and services include dry needling, joint mobilizations and manipulations, soft tissue mobilization, manual cupping, Proprioceptive Neuromuscular Facilitation (PNF) techniques and stretching, exercise modification, and tailored exercise programming.</p>
+        <p>I hold certifications in ICE (Institute of Clinical Excellence) Dry Needling for both the upper and lower body, as well as the cert-CMFA (Clinical Management of the Fitness Athlete), which specializes in treating CrossFit, weightlifting, and powerlifting athletes. Additionally, I am CF-L1 certified and a Certified Strength &amp; Conditioning Specialist (CSCS).</p>
+        <p style="font-weight:600;color:var(--navy);">Discounted package rates for multiple sessions.</p>
+        <div class="contacts">
+          <a href="tel:7208074497">720-807-4497</a>
+          <a href="mailto:fuseperformanceandrehab@gmail.com">Email</a>
+          <a href="https://fuseperformanceandrehab.janeapp.com/" target="_blank" rel="noopener">Book on Jane</a>
+          <a href="https://instagram.com/tony_gagnor" target="_blank" rel="noopener">@tony_gagnor</a>
+        </div>
+      </div>
+
+      <div class="subhead">Chiropractic Care Network</div>
+      <div class="card">
+        <h3>Scott Vander Weit</h3>
+        <p>Operates Compass Chiropractic in Lafayette, CO.</p>
+        <div class="contacts"><a href="http://www.compasschiropractic.org/" target="_blank" rel="noopener">compasschiropractic.org</a></div>
+      </div>
+      <div class="card">
+        <h3>Ryan Moss</h3>
+        <p>Upper Cervical Chiropractic care.</p>
+        <div class="contacts"><a href="https://uppercervicalboulder.com/" target="_blank" rel="noopener">Upper Cervical Chiropractic of Boulder</a></div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 4 : WELLNESS & FITNESS PROFESSIONALS -->
+  <!-- ====================================================== -->
+  <section class="group">
+    <button class="group-head" aria-expanded="false">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 17.5 17.5M21 21l-1-1M3 3l1 1M18 6l3-3M6 18l-3 3"/><rect x="5" y="5" width="4" height="4" rx="1" transform="rotate(45 7 7)"/><rect x="15" y="15" width="4" height="4" rx="1" transform="rotate(45 17 17)"/></svg></span>
+      <span class="g-titles"><h2>Wellness &amp; Fitness Professionals</h2><span class="sub">Pilates &amp; Yoga · Nutrition · Executive Coaching</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <p style="color:var(--muted);font-size:.92rem;margin:8px 0 0;">These professionals offer services that complement physical training with holistic wellness approaches, leadership development, and nutritional support.</p>
+
+      <div class="subhead">Pilates &amp; Yoga</div>
+      <div class="card">
+        <h3>Amy Russ</h3>
+        <p>Serves as an instructor at Rocky Mountain Pilates &amp; Yoga, offering complementary movement practices that enhance CrossFit training.</p>
+      </div>
+
+      <div class="subhead">Nutrition</div>
+      <div class="card">
+        <h3>Grace Jasmin</h3>
+        <p>Manufactures premium gluten-free waffles and offers expertise in consumer packaged goods (CPG).</p>
+        <div class="contacts"><a href="https://grabellas.com" target="_blank" rel="noopener">grabellas.com</a></div>
+      </div>
+
+      <div class="subhead">Executive Coaching</div>
+      <div class="card">
+        <h3>Andy Conigliaro</h3>
+        <p>Provides executive and leadership coaching, team offsite facilitation, and workshops.</p>
+        <div class="contacts"><a href="http://bearingpointstrategy.com/" target="_blank" rel="noopener">bearingpointstrategy.com</a></div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 5 : HEALTHCARE SERVICES -->
+  <!-- ====================================================== -->
+  <section class="group">
+    <button class="group-head" aria-expanded="false">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg></span>
+      <span class="g-titles"><h2>Healthcare Services</h2><span class="sub">Veterinary · Therapy &amp; Counseling · Medicare Insurance</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <p style="color:var(--muted);font-size:.92rem;margin:8px 0 0;">Our community includes dedicated healthcare professionals ready to support your wellbeing needs.</p>
+
+      <div class="subhead">Veterinary Care</div>
+      <div class="card">
+        <h3>Christi Leong</h3>
+        <p>Highly recommended veterinarian whose clients praise both her and her office staff.</p>
+        <div class="contacts">
+          <a href="https://vcahospitals.com/centennial-valley" target="_blank" rel="noopener">VCA Centennial Valley</a>
+        </div>
+      </div>
+
+      <div class="subhead">Therapy &amp; Counseling</div>
+      <div class="card">
+        <h3>Ema Beilke</h3>
+        <p>Individual therapy for teens and young adults through private practice.</p>
+        <div class="contacts"><a href="http://www.changetherapyservices.com/" target="_blank" rel="noopener">Change Therapy Services</a></div>
+      </div>
+      <div class="card">
+        <h3>Grant Leitheiser</h3>
+        <p>Offers 1:1 therapy and community support with optional faith-inclusive approach.</p>
+        <div class="contacts"><a href="https://goodsoilcounseling.com/" target="_blank" rel="noopener">Good Soil Counseling</a></div>
+      </div>
+      <div class="card">
+        <h3>Julie Rappaport</h3>
+        <p>Couples therapist who also teaches couples therapy to other therapists.</p>
+        <div class="contacts"><a href="https://couplescounselinginboulder.com/" target="_blank" rel="noopener">Couples Therapy</a></div>
+      </div>
+
+      <div class="subhead">Medicare Insurance</div>
+      <div class="card">
+        <h3>Jennifer Boyd</h3>
+        <p>Medicare and more assistance through AIS Medicare &amp; More (Louisville branch). Officed at Koda CrossFit Iron View coworking space.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- GROUP 6 : SPECIALIZED SERVICES FOR CHILDREN -->
+  <!-- ====================================================== -->
+  <section class="group">
+    <button class="group-head" aria-expanded="false">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+      <span class="g-titles"><h2>Specialized Services for Children</h2><span class="sub">Speech Therapy · Educational Support</span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="group-body"><div class="group-body-inner"><div class="group-pad">
+      <div class="subhead">Speech Therapy</div>
+      <div class="card">
+        <h3>Kathryn McNeely</h3>
+        <p>Provides speech therapy services for children from birth to 18 years of age. Her Chit Chat program is available after 5:00 PM and following classes.</p>
+        <div class="contacts"><a href="https://www.bbspeech.com/" target="_blank" rel="noopener">bbspeech.com</a></div>
+      </div>
+
+      <div class="subhead">Educational Support</div>
+      <div class="card">
+        <h3>Kristin Ann</h3>
+        <p>Offers tutoring in mathematics (6th grade and up) and physics. As a PhD student in physics education and former middle/high school teacher, she brings valuable expertise to students needing academic assistance.</p>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- COMMUNITY COLLABORATION -->
+  <!-- ====================================================== -->
+  <section class="collab">
+    <h2>Community Collaboration</h2>
+    <div class="collab-grid">
+      <div class="collab-card">
+        <div class="num">1</div>
+        <h3>Resource Sharing</h3>
+        <p>This document represents our community's commitment to supporting one another through professional expertise and services.</p>
+      </div>
+      <div class="collab-card">
+        <div class="num">2</div>
+        <h3>Expanding Services</h3>
+        <p>Many professionals listed are eager to collaborate and expand their services within the Koda community.</p>
+      </div>
+      <div class="collab-card">
+        <div class="num">3</div>
+        <h3>Making Connections</h3>
+        <p>For more details about any service or to connect with providers, reach out to Alex Miller.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ADD-ME CTA -->
+  <!-- ====================================================== -->
+  <section class="cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+    <p>If you would like to be added to this list, please reach out to <b>Kevin</b> with the info below.</p>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot-wrap">
+    <div class="lockup">
+      <img class="mark" src="koda-kx-mark.png" alt="Koda KX mark">
+      <div class="divider"></div>
+      <div class="name"><b>Koda</b><small>CrossFit Iron View</small></div>
+    </div>
+    <div class="foot-contacts">
+      <a href="tel:6302920725"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(630) 292-0725</a>
+      <a href="mailto:kodaironview@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>kodaironview@gmail.com</a>
+      <a href="https://maps.google.com/?q=740 S Pierce Ave 5 Louisville CO 80027" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>740 S Pierce Ave #5, Louisville, CO 80027</a>
+    </div>
+    <p class="foot-note"><b>Koda means friend.</b> &nbsp;Thanks for being part of the Koda community.<br>Integrity. Progression. Community.</p>
+  </div>
+</footer>
+
+<script>
+  const groups = Array.from(document.querySelectorAll('.group'));
+
+  function setOpen(group, open){
+    group.classList.toggle('open', open);
+    group.querySelector('.group-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  groups.forEach(g=>{
+    g.querySelector('.group-head').addEventListener('click', ()=>{
+      setOpen(g, !g.classList.contains('open'));
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click', ()=> groups.forEach(g=>setOpen(g,true)));
+  document.getElementById('collapseAll').addEventListener('click', ()=> groups.forEach(g=>setOpen(g,false)));
+
+  // count providers
+  const total = document.querySelectorAll('.card').length;
+  document.getElementById('count').textContent = total + ' community providers across ' + groups.length + ' categories';
+</script>
+
+</body>
+</html>
